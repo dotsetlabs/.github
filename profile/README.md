@@ -1,6 +1,6 @@
 <div align="center">
 
-# .set labs
+# dotset labs
 
 **Simple, powerful security tools for modern developer teams.**
 
