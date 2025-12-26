@@ -24,13 +24,13 @@ We build open-source tools and cloud services that help developers manage secret
 |:--------|:------------|
 | **Zero-knowledge** | AES-256-GCM encryption locally — we never see your plain-text data |
 | **Native SDK** | Type-safe secret loading for Node.js with built-in caching |
-| **Secret Templating** | Dynamic values and complex JSON support |
-| **Audit logging** | Track who accessed what and when (Business) |
+| **Tamper-Proof Audit** | SHA-256 hash chain audit logs covering all access (Pro/Business) |
+| **RBAC & Scopes** | Role-based access with environment isolation |
 
 ```bash
-npm install -g @dotsetlabs/axion
-axn set DB_PASSWORD "secret123"   # Store encrypted secret
-axn run -- npm start              # Inject secrets at runtime
+npm install -g @dotsetlabs/cli
+dotset secrets set DB_PASSWORD "secret123"   # Store encrypted secret
+dotset run -- npm start                     # Inject secrets at runtime
 ```
 
 ---
@@ -43,13 +43,12 @@ axn run -- npm start              # Inject secrets at runtime
 |:--------|:------------|
 | **Detection Modes** | **Detect**, **Redact**, or **Block** secret leaks in real-time |
 | **Network Guard** | Monitor and restrict outbound connections |
-| **Runtime SBOM** | Generate CycloneDX/SPDX materials from actual behavior |
+| **Unified Audit** | Integrated security event tracking across the platform |
 | **Security Dashboard** | Visual risk scores and leak timelines in the Cloud |
 
 ```bash
-npm install -g @dotsetlabs/gluon
-gln run --mode block -- npm start  # Fail process on secret leak
-gln sbom --static                 # Generate security bill of materials
+dotset run --mode block -- npm start  # Fail process on secret leak
+dotset scan                           # Static analysis
 ```
 
 ---
@@ -61,14 +60,13 @@ gln sbom --static                 # Generate security bill of materials
 | Feature | Description |
 |:--------|:------------|
 | **Local-First** | Run pipelines on your machine with instant feedback |
-| **Zero-Config** | Auto-detects test suites and build steps |
-| **Parallel Execution** | Dramatically speed up local builds and tests |
+| **Axion Sync** | Push local CI results to the cloud with `--sync` |
+| **Security Aware** | Built-in leak detection and dependency monitoring |
 | **CI Dashboard** | Rich run history and log viewer in the Cloud |
 
 ```bash
-npm install -g @dotsetlabs/hadron
-hdn run                           # Run local CI workflow
-hdn check                         # Validate workflow configurations
+dotset ci --list                      # List available CI workflows
+dotset ci build test --sync           # Run and sync results to cloud
 ```
 
 ---
@@ -79,13 +77,12 @@ hdn check                         # Validate workflow configurations
 
 | Feature | Description |
 |:--------|:------------|
+| **Auth by Default** | Tunnels are private by default — no extra config needed |
 | **Request Inspector** | View and replay captured requests (REST/WebSocket) |
-| **Zero-trust** | Tunnels are private by default — authenticated via SSO |
-| **Stable URLs** | Reserved subdomains that persist across sessions |
+| **SSO Protection** | Unified authentication with GitHub or Google |
 
 ```bash
-npm install -g @dotsetlabs/tachyon
-tcn share 3000 --inspect          # Share and launch Request Inspector
+dotset share 3000 --inspect          # Share and launch Request Inspector
 ```
 
 ---
