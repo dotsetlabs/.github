@@ -71,9 +71,7 @@ dotset ci build test --sync           # Run and sync results to cloud
 
 ---
 
-### ⚡ [Tachyon](https://github.com/dotsetlabs/tachyon) — Zero-Trust Dev Tunnels
 
-**Localhost sharing with a built-in Inspector.** Tachyon provides instant tunnels with SSO and a powerful request inspector.
 
 | Feature | Description |
 |:--------|:------------|
@@ -102,7 +100,6 @@ dotset run --scope prod --mode redact -- npm start
 
 ## 💰 Pricing
 
-| Plan | Axion | Gluon | Hadron | Tachyon |
 |:-----|:------|:------|:-------|:--------|
 | **Free** | 2 projects | Local only | 1 project | 2 tunnels |
 | **Pro** | Unlimited Cloud | 30-day History | 5 projects | 10 tunnels |
