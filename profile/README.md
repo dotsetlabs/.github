@@ -79,11 +79,11 @@ dotset ci --mode redact           # Run with protection
 
 ## 💰 Pricing
 
-| Plan | Projects | Secrets | Audit Logs |
-|:-----|:---------|:--------|:-----------|
-| **Free** | 5 | 100/project | 7 days |
-| **Pro** | 25 | Unlimited | 90 days |
-| **Business** | Unlimited | Unlimited | 365 days |
+| Plan | Projects | Audit Logs |
+|:-----|:---------|:-----------|
+| **Free** | 3 | 7 days |
+| **Pro** | 10 | 90 days |
+| **Business** | Unlimited | 365 days |
 
 ---
 
