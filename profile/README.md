@@ -2,108 +2,88 @@
 
 # dotset labs
 
-**Simple, powerful security and workflow tools for modern developer teams.**
+**Shield your CI from secret leaks.**
 
 [![Website](https://img.shields.io/badge/website-dotsetlabs.com-blue?style=flat-square)](https://dotsetlabs.com)
-[![Documentation](https://img.shields.io/badge/docs-docs.dotsetlabs.com-6366f1?style=flat-square)](https://docs.dotsetlabs.com)
+[![Documentation](https://img.shields.io/badge/docs-docs.dotsetlabs.com-10b981?style=flat-square)](https://docs.dotsetlabs.com)
+[![npm](https://img.shields.io/badge/npm-@dotsetlabs/shield-red?style=flat-square)](https://www.npmjs.com/package/@dotsetlabs/shield)
 [![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)](https://opensource.org/licenses/MIT)
 
 </div>
 
 ---
 
-We build open-source tools and cloud services that help developers manage secrets, monitor runtime security, run local CI pipelines, and share development environments securely. Our ecosystem is designed for speed, security, and seamless integration.
+## 🛡️ dotset shield
 
-## 🚀 Our Products
+**Real-time secret protection for CI/CD build logs.**
 
-### 🔐 [Axion](https://github.com/dotsetlabs/axion) — Encrypted Secrets & SDK
+Secrets leak in build logs every day. Debug statements, error messages, and verbose logging expose API keys, tokens, and credentials. GitHub's built-in masking can't catch everything. GitGuardian scans *after* the breach.
 
-**Never commit `.env` files again.** Axion provides zero-knowledge encryption for environment variables with seamless team sync and a native SDK.
-
-| Feature | Description |
-|:--------|:------------|
-| **Zero-knowledge** | AES-256-GCM encryption locally — we never see your plain-text data |
-| **Native SDK** | Type-safe secret loading for Node.js with built-in caching |
-| **Tamper-Proof Audit** | SHA-256 hash chain audit logs covering all access (Pro/Business) |
-| **RBAC & Scopes** | Role-based access with environment isolation |
+**dotset shield intercepts output streams and redacts secrets in real-time — before they're ever exposed.**
 
 ```bash
-npm install -g @dotsetlabs/cli
-dotset secrets set DB_PASSWORD "secret123"   # Store encrypted secret
-dotset run -- npm start                     # Inject secrets at runtime
+npm install -g @dotsetlabs/shield
+
+dotset init                                    # Initialize encryption
+dotset secrets set API_KEY "sk-..."            # Store encrypted secret
+dotset run --mode redact -- npm start          # Run with protection
 ```
 
 ---
 
-### 🔬 [Gluon](https://github.com/dotsetlabs/gluon) — Runtime Protection & Security
-
-**Stop leaks before they happen.** Gluon provides active protection for your secrets and deep telemetry for your application's behavior.
+## ✨ Key Features
 
 | Feature | Description |
 |:--------|:------------|
-| **Detection Modes** | **Detect**, **Redact**, or **Block** secret leaks in real-time |
-| **Network Guard** | Monitor and restrict outbound connections |
-| **Unified Audit** | Integrated security event tracking across the platform |
-| **Security Dashboard** | Visual risk scores and leak timelines in the Cloud |
+| **Three Protection Modes** | **Detect** (audit), **Redact** (replace), or **Block** (suppress) |
+| **AES-256-GCM Encryption** | Zero-knowledge secrets — we never see your values |
+| **Scoped Secrets** | Separate development, staging, and production |
+| **Local CI Runner** | Run GitHub Actions workflows locally with protection |
+| **Team Sync** | Share encrypted secrets across your team via cloud |
+
+---
+
+## 🔐 Protection Modes
 
 ```bash
-dotset run --mode block -- npm start  # Fail process on secret leak
-dotset scan                           # Static analysis
+# Detect mode — log exposures without modification
+dotset run --mode detect -- npm test
+
+# Redact mode (recommended) — replace secrets with [REDACTED]
+dotset run --mode redact -- npm start
+
+# Block mode — suppress lines containing secrets
+dotset run --mode block -- npm test
+```
+
+**Output with redact mode:**
+```
+Connecting to database: [REDACTED]
+Using API key: [REDACTED]
+Server running on port 3000
 ```
 
 ---
 
-### 🚀 [Hadron](https://github.com/dotsetlabs/hadron) — Local-First CI
+## 🚀 Local CI
 
-**Fast, local CI with zero config.** Hadron runs your workflows locally first, providing identical environments from dev to prod.
-
-| Feature | Description |
-|:--------|:------------|
-| **Local-First** | Run pipelines on your machine with instant feedback |
-| **Axion Sync** | Push local CI results to the cloud with `--sync` |
-| **Security Aware** | Built-in leak detection and dependency monitoring |
-| **CI Dashboard** | Rich run history and log viewer in the Cloud |
+Run your GitHub Actions workflows locally:
 
 ```bash
-dotset ci --list                      # List available CI workflows
-dotset ci build test --sync           # Run and sync results to cloud
-```
-
----
-
-
-
-| Feature | Description |
-|:--------|:------------|
-| **Auth by Default** | Tunnels are private by default — no extra config needed |
-| **Request Inspector** | View and replay captured requests (REST/WebSocket) |
-| **SSO Protection** | Unified authentication with GitHub or Google |
-
-```bash
-dotset share 3000 --inspect          # Share and launch Request Inspector
-```
-
----
-
-## 📦 Unified CLI
-
-The `dotset` CLI combines the entire ecosystem into a single tool.
-
-```bash
-npm install -g @dotsetlabs/cli
-
-# Run Axion (secrets) + Gluon (protection) + Hadron (CI)
-dotset run --scope prod --mode redact -- npm start
+dotset ci --list                  # See available jobs
+dotset ci build test              # Run specific jobs
+dotset ci --mode redact           # Run with protection
 ```
 
 ---
 
 ## 💰 Pricing
 
-|:-----|:------|:------|:-------|:--------|
-| **Free** | 2 projects | Local only | 1 project | 2 tunnels |
-| **Pro** | Unlimited Cloud | 30-day History | 5 projects | 10 tunnels |
-| **Business** | Audit Logs | Full SBOM | Unlimited | Dedicated IPs |
+| Plan | Projects | Secrets | Audit Logs |
+|:-----|:---------|:--------|:-----------|
+| **Free** | 5 | 100/project | 7 days |
+| **Pro** | 25 | Unlimited | 90 days |
+| **Business** | Unlimited | Unlimited | 365 days |
 
 ---
 
@@ -112,9 +92,10 @@ dotset run --scope prod --mode redact -- npm start
 - 🌐 [dotsetlabs.com](https://dotsetlabs.com)
 - 📖 [docs.dotsetlabs.com](https://docs.dotsetlabs.com)
 - 🖥️ [app.dotsetlabs.com](https://app.dotsetlabs.com)
+- 💻 [Demo](https://github.com/dotsetlabs/demos)
 
 <div align="center">
 
-**Built with ❤️ for developers who care about security and speed.**
+**Built with ❤️ for developers who care about security.**
 
 </div>
