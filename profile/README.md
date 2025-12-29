@@ -24,9 +24,9 @@ Secrets leak in build logs every day. Debug statements, error messages, and verb
 ```bash
 npm install -g @dotsetlabs/shield
 
-dotset init                                    # Initialize encryption
-dotset secrets set API_KEY "sk-..."            # Store encrypted secret
-dotset run --mode redact -- npm start          # Run with protection
+dotset init                             # Initialize encryption
+dotset secrets set API_KEY "sk-..."     # Store encrypted secret
+dotset run -- npm start                 # Run with protection (redact is default)
 ```
 
 ---
@@ -35,22 +35,23 @@ dotset run --mode redact -- npm start          # Run with protection
 
 | Feature | Description |
 |:--------|:------------|
-| **Three Protection Modes** | **Detect** (audit), **Redact** (replace), or **Block** (suppress) |
+| **Three Protection Modes** | **Detect** (audit), **Redact** (replace, default), or **Block** (suppress) |
 | **AES-256-GCM Encryption** | Zero-knowledge secrets — we never see your values |
 | **Scoped Secrets** | Separate development, staging, and production |
-| **Local CI Runner** | Run GitHub Actions workflows locally with protection |
-| **Team Sync** | Share encrypted secrets across your team via cloud |
+| **Cloud Analytics** | Track protection events in your dashboard |
+| **Custom Patterns** | Define proprietary secret patterns (Business) |
+| **Email & Webhook Alerts** | Get notified when secrets are blocked |
 
 ---
 
 ## 🔐 Protection Modes
 
 ```bash
+# Default (redact) — replace secrets with [REDACTED]
+dotset run -- npm start
+
 # Detect mode — log exposures without modification
 dotset run --mode detect -- npm test
-
-# Redact mode (recommended) — replace secrets with [REDACTED]
-dotset run --mode redact -- npm start
 
 # Block mode — suppress lines containing secrets
 dotset run --mode block -- npm test
@@ -79,11 +80,13 @@ dotset ci --mode redact           # Run with protection
 
 ## 💰 Pricing
 
-| Plan | Projects | Audit Logs |
-|:-----|:---------|:-----------|
-| **Free** | 3 | 7 days |
-| **Pro** | 10 | 90 days |
-| **Business** | Unlimited | 365 days |
+| Plan | Price | Projects | Runs | Retention |
+|:-----|:------|:---------|:-----|:----------|
+| **Free** | $0 | 1 | 100/month | 7 days |
+| **Pro** | $15/mo | 5 | Unlimited | 90 days |
+| **Business** | $39/mo | Unlimited | Unlimited | 1 year |
+
+**Pro** adds email alerts and CI reports. **Business** adds custom patterns and webhook alerts.
 
 ---
 
