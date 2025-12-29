@@ -1,6 +1,6 @@
 <div align="center">
 
-# dotset labs
+# Dotset Labs
 
 **Shield your CI from secret leaks.**
 
