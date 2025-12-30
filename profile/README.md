@@ -2,11 +2,11 @@
 
 # Dotset Labs LLC
 
-**Shield your CI from secret leaks.**
+**Unified secret protection and infrastructure validation.**
 
 [![Website](https://img.shields.io/badge/website-dotsetlabs.com-blue?style=flat-square)](https://dotsetlabs.com)
 [![Documentation](https://img.shields.io/badge/docs-docs.dotsetlabs.com-10b981?style=flat-square)](https://docs.dotsetlabs.com)
-[![npm](https://img.shields.io/badge/npm-@dotsetlabs/shield-red?style=flat-square)](https://www.npmjs.com/package/@dotsetlabs/shield)
+[![npm](https://img.shields.io/badge/npm-@dotsetlabs/cli-red?style=flat-square)](https://www.npmjs.com/package/@dotsetlabs/cli)
 [![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)](https://opensource.org/licenses/MIT)
 
 </div>
@@ -17,16 +17,38 @@
 
 **Real-time secret protection for CI/CD build logs.**
 
-Secrets leak in build logs every day. Debug statements, error messages, and verbose logging expose API keys, tokens, and credentials. GitHub's built-in masking can't catch everything. GitGuardian scans *after* the breach.
-
-**Dotset Shield intercepts output streams and redacts secrets in real-time — before they're ever exposed.**
+Shield intercepts output streams and redacts secrets in real-time — before they're ever exposed.
 
 ```bash
-npm install -g @dotsetlabs/shield
+npm install -g @dotsetlabs/cli
 
-# Zero migration — use your existing .env files
-dotset run -- npm start
+# 1. Link your project (Unified)
+dotset link <project-id> --token <token>
+
+# 2. Run with protection (Zero migration)
+dotset shield run -- npm start
 # 🛡️  shield | mode: redact | secrets: 5 | providers: dotenv
+```
+
+---
+
+## 🔍 Dotset Preflight
+
+**Active infrastructure validation for modern dev teams.**
+
+Preflight ensures your services (DBs, Caches, APIs) are reachable *before* your app starts.
+
+```bash
+# Validate your local environment connectivity
+dotset preflight check
+
+# Upload your schema to the cloud
+dotset preflight push
+
+# 🔍 Preflight Check
+# 📡 Running Active Probes...
+#   • DATABASE_URL (postgres)... PASSED
+#   • REDIS_URL (redis)... PASSED
 ```
 
 ---
@@ -36,39 +58,11 @@ dotset run -- npm start
 | Feature | Description |
 |:--------|:------------|
 | **Zero Migration** | Works with your existing `.env` files immediately |
-| **Provider-Agnostic** | Aggregates secrets from dotenv, AWS Secrets Manager, environment variables |
+| **Active Probes** | Validate Postgres, Redis, MongoDB, AWS, and HTTP connectivity |
+| **Streaming Protection** | Line-buffered redaction catches secrets split across chunks |
 | **Three Protection Modes** | **Detect** (audit), **Redact** (replace), or **Block** (suppress) |
-| **Streaming Redaction** | Line-buffered detection catches secrets split across chunks |
 | **Cloud Analytics** | Track protection events and exposure patterns in your dashboard |
-| **Custom Patterns** | Define proprietary secret patterns (Business tier) |
-| **Slack/Discord/Webhook Alerts** | Get notified when secrets are detected |
-
----
-
-## 🔐 Protection Modes
-
-```bash
-# Default (redact) — replace secrets with [REDACTED]
-dotset run -- npm start
-
-# Detect mode — log exposures without modification
-dotset run --mode detect -- npm test
-
-# Block mode — suppress lines containing secrets
-dotset run --mode block -- npm test
-```
-
-**Output with redact mode:**
-```
-🛡️  shield | mode: redact | secrets: 5 | providers: dotenv
-
-Starting server...
-Connecting to database: [REDACTED]
-Using API key: [REDACTED]
-Server running on port 3000
-
-🛡️  shield | exit: 0 | exposures: 2
-```
+| **Unified CLI** | One package for both Shield and Preflight: `@dotsetlabs/cli` |
 
 ---
 
@@ -76,35 +70,18 @@ Server running on port 3000
 
 ### GitHub Actions
 
-Use our official action to protect any step in your workflow:
+Use our official actions to protect and validate your workflows:
 
 ```yaml
+- name: Preflight Check
+  uses: dotsetlabs/cli/actions/preflight@v1
+
 - name: Run Protected Tests
-  uses: dotsetlabs/shield@v1
+  uses: dotsetlabs/cli/actions/shield@v1
   with:
     command: npm test
     token: ${{ secrets.DOTSET_TOKEN }}
     project-id: ${{ vars.DOTSET_PROJECT_ID }}
-```
-
-### Other CI Providers
-
-Shield works with any CI/CD provider — GitLab, CircleCI, Jenkins, and more. See our [Integration Guides](https://docs.dotsetlabs.com/guides).
-
----
-
-## ☁️ Cloud Analytics
-
-Connect to your dashboard for visibility into protection events:
-
-```bash
-# Link your project
-dotset link <project-id> --token <api-token>
-
-# Runs are automatically tracked
-dotset run -- npm test
-
-# View analytics at app.dotsetlabs.com
 ```
 
 ---
@@ -117,17 +94,15 @@ dotset run -- npm test
 | **Pro** | $15/mo | 5 | 10 | Unlimited | 90 days |
 | **Business** | $39/mo | Unlimited | Unlimited | Unlimited | 1 year |
 
-**Flat pricing, not per-seat.** A team of 10 on Business pays $39/month total.
-
 ---
 
 ## 🔒 Trust & Security
 
 **Your secrets never leave your machine.** Shield processes secrets entirely locally. When you enable cloud analytics, we only send anonymous metadata (counts, not values).
 
-- 📖 [Audit the open-source CLI](https://github.com/dotsetlabs/shield)
+- 📖 [Audit the open-source CLI](https://github.com/dotsetlabs/cli)
 - 🚫 Use `--no-telemetry` to disable all cloud reporting
-- 🔨 [Build from source](https://github.com/dotsetlabs/shield) instead of npm
+- hammer [Build from source](https://github.com/dotsetlabs/cli) instead of npm
 
 ---
 
@@ -142,6 +117,6 @@ dotset run -- npm test
 
 **Built with ❤️ for developers who care about security.**
 
-© 2024 Dotset Labs LLC
+© 2025 Dotset Labs LLC
 
 </div>
