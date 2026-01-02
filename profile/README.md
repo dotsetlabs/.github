@@ -13,18 +13,18 @@
 
 ---
 
-## Dotset Shield
+## Dotset Mantle
 
 **Free, open-source secret protection for CI/CD build logs.**
 
-Shield intercepts output streams and redacts secrets in real-time — before they're ever exposed in your logs.
+Mantle intercepts output streams and redacts secrets in real-time — before they're ever exposed in your logs.
 
 ```bash
 npm install -g @dotsetlabs/cli
 
 # Run with protection (zero config)
-dotset shield run -- npm start
-# shield | mode: redact | secrets: 5 | providers: dotenv
+dotset mantle run -- npm start
+# mantle | mode: redact | secrets: 5 | providers: dotenv
 ```
 
 ### Key Features
@@ -81,7 +81,7 @@ dotset tollgate start --server postgres
 
 ## Trust & Security
 
-**Your data never leaves your machine.** Both Shield and Tollgate are 100% local — no cloud, no telemetry, no account required.
+**Your data never leaves your machine.** Both Mantle and Tollgate are 100% local — no cloud, no telemetry, no account required.
 
 - [View the source code](https://github.com/dotsetlabs/cli)
 - [Build from source](https://github.com/dotsetlabs/cli) if you prefer
