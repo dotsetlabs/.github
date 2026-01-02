@@ -73,10 +73,11 @@ tollgate start --server postgres
 | Feature | Description |
 |:--------|:------------|
 | **Policy Engine** | Allow, deny, or prompt based on tool, arguments, and risk level |
-| **Risk Analysis** | Smart analyzers detect destructive operations automatically |
-| **Audit Logging** | Every tool invocation logged to SQLite with timestamps and decisions |
-| **Zero Config Mode** | Wrap any MCP server instantly with sensible defaults |
-| **Compliance Export** | Export logs in JSON, CSV, SARIF, or CEF formats |
+| **Risk Analysis** | Smart analyzers for SQL, Filesystem, Shell, and HTTP API calls |
+| **Server Scanner** | Scan any MCP server to discover tools and assess risks before use |
+| **Templates** | 50+ pre-built policy templates for popular MCP servers |
+| **Audit Logging** | Every tool invocation logged to SQLite with PII redaction |
+| **Compliance** | Export logs in JSON, CSV, SARIF, or CEF formats |
 
 ### Works With
 
