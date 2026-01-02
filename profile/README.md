@@ -6,24 +6,26 @@
 
 [![Website](https://img.shields.io/badge/website-dotsetlabs.com-blue?style=flat-square)](https://dotsetlabs.com)
 [![Documentation](https://img.shields.io/badge/docs-docs.dotsetlabs.com-10b981?style=flat-square)](https://docs.dotsetlabs.com)
-[![npm](https://img.shields.io/badge/npm-@dotsetlabs/cli-red?style=flat-square)](https://www.npmjs.com/package/@dotsetlabs/cli)
 [![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)](https://opensource.org/licenses/MIT)
 
 </div>
 
 ---
 
-## Dotset Mantle
+## Mantle
 
 **Free, open-source secret protection for CI/CD build logs.**
 
 Mantle intercepts output streams and redacts secrets in real-time — before they're ever exposed in your logs.
 
+[![npm](https://img.shields.io/npm/v/@dotsetlabs/mantle?style=flat-square&label=npm)](https://www.npmjs.com/package/@dotsetlabs/mantle)
+[![GitHub](https://img.shields.io/badge/source-dotsetlabs/mantle-blue?style=flat-square)](https://github.com/dotsetlabs/mantle)
+
 ```bash
-npm install -g @dotsetlabs/cli
+npm install -g @dotsetlabs/mantle
 
 # Run with protection (zero config)
-dotset mantle run -- npm start
+mantle run -- npm start
 # mantle | mode: redact | secrets: 5 | providers: dotenv
 ```
 
@@ -34,31 +36,36 @@ dotset mantle run -- npm start
 | **Zero Config** | Works with your existing `.env` files immediately |
 | **Streaming Protection** | Line-buffered redaction catches secrets split across chunks |
 | **Three Modes** | **Detect** (audit), **Redact** (replace), or **Block** (suppress) |
-| **22+ Patterns** | AWS, GitHub, Stripe, OpenAI, and more built-in |
+| **100+ Patterns** | AWS, GitHub, Stripe, OpenAI, and more built-in |
 | **Compliance Reports** | Generate HTML/SARIF reports for audit trails |
 
 ### GitHub Action
 
 ```yaml
 steps:
-  - uses: dotsetlabs/cli@v1
+  - uses: dotsetlabs/mantle@v1
   - run: npm test
 ```
 
 ---
 
-## Dotset Tollgate
+## Tollgate
 
 **Policy-based security proxy for MCP (Model Context Protocol) servers.**
 
 Tollgate sits between AI agents and MCP servers, enforcing security policies before any tool is executed.
 
+[![npm](https://img.shields.io/npm/v/@dotsetlabs/tollgate?style=flat-square&label=npm)](https://www.npmjs.com/package/@dotsetlabs/tollgate)
+[![GitHub](https://img.shields.io/badge/source-dotsetlabs/tollgate-blue?style=flat-square)](https://github.com/dotsetlabs/tollgate)
+
 ```bash
+npm install -g @dotsetlabs/tollgate
+
 # Wrap any MCP server with protection
-dotset tollgate wrap npx @anthropic/mcp-server-fs ./
+tollgate wrap npx @anthropic/mcp-server-fs ./
 
 # Or use a config file for custom policies
-dotset tollgate start --server postgres
+tollgate start --server postgres
 ```
 
 ### Key Features
@@ -75,6 +82,7 @@ dotset tollgate start --server postgres
 
 - Claude Desktop
 - Cursor
+- Claude Code
 - Any MCP-compatible AI agent
 
 ---
@@ -83,8 +91,8 @@ dotset tollgate start --server postgres
 
 **Your data never leaves your machine.** Both Mantle and Tollgate are 100% local — no cloud, no telemetry, no account required.
 
-- [View the source code](https://github.com/dotsetlabs/cli)
-- [Build from source](https://github.com/dotsetlabs/cli) if you prefer
+- [Mantle source code](https://github.com/dotsetlabs/mantle)
+- [Tollgate source code](https://github.com/dotsetlabs/tollgate)
 
 ---
 
@@ -92,7 +100,8 @@ dotset tollgate start --server postgres
 
 - [dotsetlabs.com](https://dotsetlabs.com) — Website
 - [docs.dotsetlabs.com](https://docs.dotsetlabs.com) — Documentation
-- [GitHub](https://github.com/dotsetlabs/cli) — Source code
+- [Mantle GitHub](https://github.com/dotsetlabs/mantle) — Secret detection CLI
+- [Tollgate GitHub](https://github.com/dotsetlabs/tollgate) — MCP security proxy
 
 <div align="center">
 
