@@ -2,50 +2,13 @@
 
 # Dotset Labs
 
-**Open-source developer tools for secure CI/CD and AI agent governance.**
+**Open-source security tools for the AI era.**
 
 [![Website](https://img.shields.io/badge/website-dotsetlabs.com-blue?style=flat-square)](https://dotsetlabs.com)
 [![Documentation](https://img.shields.io/badge/docs-docs.dotsetlabs.com-10b981?style=flat-square)](https://docs.dotsetlabs.com)
 [![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)](https://opensource.org/licenses/MIT)
 
 </div>
-
----
-
-## Mantle
-
-**Free, open-source secret protection for CI/CD build logs.**
-
-Mantle intercepts output streams and redacts secrets in real-time — before they're ever exposed in your logs.
-
-[![npm](https://img.shields.io/npm/v/@dotsetlabs/mantle?style=flat-square&label=npm)](https://www.npmjs.com/package/@dotsetlabs/mantle)
-[![GitHub](https://img.shields.io/badge/source-dotsetlabs/mantle-blue?style=flat-square)](https://github.com/dotsetlabs/mantle)
-
-```bash
-npm install -g @dotsetlabs/mantle
-
-# Run with protection (zero config)
-mantle run -- npm start
-# mantle | mode: redact | secrets: 5 | providers: dotenv
-```
-
-### Key Features
-
-| Feature | Description |
-|:--------|:------------|
-| **Zero Config** | Works with your existing `.env` files immediately |
-| **Streaming Protection** | Line-buffered redaction catches secrets split across chunks |
-| **Three Modes** | **Detect** (audit), **Redact** (replace), or **Block** (suppress) |
-| **100+ Patterns** | AWS, GitHub, Stripe, OpenAI, and more built-in |
-| **Compliance Reports** | Generate HTML/SARIF reports for audit trails |
-
-### GitHub Action
-
-```yaml
-steps:
-  - uses: dotsetlabs/mantle@v1
-  - run: npm test
-```
 
 ---
 
@@ -88,12 +51,52 @@ tollgate start --server postgres
 
 ---
 
+## Hardpoint
+
+**Developer environment security scanner for the AI era.**
+
+Hardpoint scans your development environment for threats that traditional security tools miss — malicious AI config files, prompt injection, hidden Unicode, and more.
+
+[![GitHub](https://img.shields.io/badge/source-dotsetlabs/hardpoint-blue?style=flat-square)](https://github.com/dotsetlabs/hardpoint)
+
+```bash
+# Install via Homebrew
+brew install dotsetlabs/tap/hardpoint
+
+# Scan your environment
+hardpoint scan
+
+# Auto-fix certain issues
+hardpoint fix AI-003 CLAUDE.md
+```
+
+### Key Features
+
+| Feature | Description |
+|:--------|:------------|
+| **AI Config Scanner** | Detects threats in `.cursorrules`, `CLAUDE.md`, `mcp.json` |
+| **Hidden Unicode** | Finds invisible characters that can hide malicious instructions |
+| **Prompt Injection** | Identifies attempts to override AI assistant behavior |
+| **Shell Backdoors** | Scans `.bashrc`, `.zshrc` for suspicious commands |
+| **Git Hook Analysis** | Checks for malicious git hooks |
+| **SARIF Output** | GitHub Code Scanning integration |
+
+### What It Catches
+
+- Instruction overrides in AI config files
+- Zero-width and invisible Unicode characters
+- Hardcoded secrets and credentials
+- Suspicious shell aliases and functions
+- Malicious git hooks
+
+---
+
 ## Trust & Security
 
-**Your data never leaves your machine.** Both Mantle and Tollgate are 100% local — no cloud, no telemetry, no account required.
+**Your data never leaves your machine.** Both Tollgate and Hardpoint are 100% local — no cloud, no telemetry, no account required.
 
-- [Mantle source code](https://github.com/dotsetlabs/mantle)
 - [Tollgate source code](https://github.com/dotsetlabs/tollgate)
+- [Hardpoint source code](https://github.com/dotsetlabs/hardpoint)
 
 ---
 
@@ -101,11 +104,11 @@ tollgate start --server postgres
 
 - [dotsetlabs.com](https://dotsetlabs.com) — Website
 - [docs.dotsetlabs.com](https://docs.dotsetlabs.com) — Documentation
-- [Mantle GitHub](https://github.com/dotsetlabs/mantle) — Secret detection CLI
 - [Tollgate GitHub](https://github.com/dotsetlabs/tollgate) — MCP security proxy
+- [Hardpoint GitHub](https://github.com/dotsetlabs/hardpoint) — Dev environment scanner
 
 <div align="center">
 
-**Built for developers who care about security.**
+**Built for developers working with AI.**
 
 </div>
