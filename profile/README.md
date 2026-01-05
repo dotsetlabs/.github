@@ -41,6 +41,10 @@ hardpoint scan
 
 # Auto-fix certain issues
 hardpoint fix AI-003 CLAUDE.md
+
+# Manage suppression baselines
+hardpoint baseline list
+hardpoint baseline add AI-001 --reason "Known safe"
 ```
 
 ### Key Features
@@ -74,6 +78,9 @@ countersign verify @anthropic/mcp-server-filesystem
 
 # Check trust level
 countersign trust @modelcontextprotocol/server-postgres
+
+# Install automatic verification hooks
+countersign hook install --min-score 80
 ```
 
 ### Key Features
@@ -118,6 +125,7 @@ tollgate start --server postgres
 | **Templates** | 50+ pre-built policy templates for popular MCP servers |
 | **Audit Logging** | Every tool invocation logged to SQLite with PII redaction |
 | **Compliance** | Export logs in JSON, CSV, SARIF, or CEF formats |
+| **Approval Methods** | Terminal prompts, interactive web UI, or webhook integration |
 
 ### Works With
 
