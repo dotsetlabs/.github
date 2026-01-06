@@ -19,7 +19,6 @@ AI assistants create new attack surfaces. Our tools provide layered security acr
 | Stage | Tool | Purpose |
 |:------|:-----|:--------|
 | **Pre-install** | [Hardpoint](#hardpoint) | Scan your dev environment for hidden threats |
-| **At Install** | [Countersign](#countersign) | Verify package provenance before installation |
 | **At Runtime** | [Tollgate](#tollgate) | Enforce policies on AI agent actions |
 | **Detection** | [Deadfall](#deadfall) | Trap intruders with honeypots and canary tokens |
 
@@ -58,37 +57,6 @@ hardpoint baseline add AI-001 --reason "Known safe"
 | **Shell Backdoors** | Scans `.bashrc`, `.zshrc` for suspicious commands |
 | **Git Hook Analysis** | Checks for malicious git hooks |
 | **SARIF Output** | GitHub Code Scanning integration |
-
----
-
-## Countersign
-
-**Package provenance verification for MCP servers.**
-
-Countersign verifies that MCP server packages are signed by trusted publishers, protecting you from supply chain attacks before installation.
-
-[![GitHub](https://img.shields.io/badge/source-dotsetlabs/countersign-06b6d4?style=flat-square)](https://github.com/dotsetlabs/countersign)
-
-```bash
-# Install
-go install github.com/dotsetlabs/countersign/cmd/countersign@latest
-
-# Verify a package before installing
-countersign verify @anthropic/mcp-server-filesystem
-
-# Check trust level
-countersign trust @modelcontextprotocol/server-postgres
-```
-
-### Key Features
-
-| Feature | Description |
-|:--------|:------------|
-| **Signature Verification** | Cryptographically verify package signatures via Sigstore |
-| **Trust Scoring** | 0-100 score based on provenance, publisher history, and audit status |
-| **Publisher Reputation** | Track publisher history and detect account compromises |
-| **npm Integration** | Seamless verification for npm-hosted MCP servers |
-| **CI/CD Ready** | Integrate into pipelines with exit codes and JSON output |
 
 ---
 
@@ -171,7 +139,6 @@ deadfall watch
 **Your data never leaves your machine.** All Dotset Labs tools are 100% local — no cloud, no telemetry, no account required.
 
 - [Hardpoint source code](https://github.com/dotsetlabs/hardpoint)
-- [Countersign source code](https://github.com/dotsetlabs/countersign)
 - [Tollgate source code](https://github.com/dotsetlabs/tollgate)
 - [Deadfall source code](https://github.com/dotsetlabs/deadfall)
 
@@ -182,7 +149,6 @@ deadfall watch
 - [dotsetlabs.com](https://dotsetlabs.com) — Website
 - [docs.dotsetlabs.com](https://docs.dotsetlabs.com) — Documentation
 - [Hardpoint GitHub](https://github.com/dotsetlabs/hardpoint) — Dev environment scanner
-- [Countersign GitHub](https://github.com/dotsetlabs/countersign) — Package provenance verification
 - [Tollgate GitHub](https://github.com/dotsetlabs/tollgate) — MCP security proxy
 - [Deadfall GitHub](https://github.com/dotsetlabs/deadfall) — Honeypot and canary tokens
 
