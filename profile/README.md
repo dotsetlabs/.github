@@ -21,6 +21,7 @@ AI assistants create new attack surfaces. Our tools provide layered security acr
 | **Pre-install** | [Hardpoint](#hardpoint) | Scan your dev environment for hidden threats |
 | **At Install** | [Countersign](#countersign) | Verify package provenance before installation |
 | **At Runtime** | [Tollgate](#tollgate) | Enforce policies on AI agent actions |
+| **Detection** | [Deadfall](#deadfall) | Trap intruders with honeypots and canary tokens |
 
 ---
 
@@ -33,8 +34,8 @@ Hardpoint scans your development environment for threats that traditional securi
 [![GitHub](https://img.shields.io/badge/source-dotsetlabs/hardpoint-10b981?style=flat-square)](https://github.com/dotsetlabs/hardpoint)
 
 ```bash
-# Install via Homebrew
-brew install dotsetlabs/tap/hardpoint
+# Install
+go install github.com/dotsetlabs/hardpoint/cmd/hardpoint@latest
 
 # Scan your environment
 hardpoint scan
@@ -66,21 +67,17 @@ hardpoint baseline add AI-001 --reason "Known safe"
 
 Countersign verifies that MCP server packages are signed by trusted publishers, protecting you from supply chain attacks before installation.
 
-[![npm](https://img.shields.io/npm/v/@anthropic/mcp-server-filesystem?style=flat-square&label=example%20package)](https://www.npmjs.com/package/@anthropic/mcp-server-filesystem)
 [![GitHub](https://img.shields.io/badge/source-dotsetlabs/countersign-06b6d4?style=flat-square)](https://github.com/dotsetlabs/countersign)
 
 ```bash
-# Install globally
-npm install -g @dotsetlabs/countersign
+# Install
+go install github.com/dotsetlabs/countersign/cmd/countersign@latest
 
 # Verify a package before installing
 countersign verify @anthropic/mcp-server-filesystem
 
 # Check trust level
 countersign trust @modelcontextprotocol/server-postgres
-
-# Install automatic verification hooks
-countersign hook install --min-score 80
 ```
 
 ### Key Features
@@ -92,7 +89,6 @@ countersign hook install --min-score 80
 | **Publisher Reputation** | Track publisher history and detect account compromises |
 | **npm Integration** | Seamless verification for npm-hosted MCP servers |
 | **CI/CD Ready** | Integrate into pipelines with exit codes and JSON output |
-| **Offline Support** | Cache verification results for air-gapped environments |
 
 ---
 
@@ -136,6 +132,40 @@ tollgate start --server postgres
 
 ---
 
+## Deadfall
+
+**AI agent honeypot and canary token generator.**
+
+Deadfall generates deceptive artifacts — fake credentials, API keys, and MCP tools — to detect when AI agents or intruders access sensitive-looking resources.
+
+[![GitHub](https://img.shields.io/badge/source-dotsetlabs/deadfall-f59e0b?style=flat-square)](https://github.com/dotsetlabs/deadfall)
+
+```bash
+# Install
+go install github.com/dotsetlabs/deadfall/cmd/deadfall@latest
+
+# Initialize in your project
+deadfall init
+
+# Generate canary files
+deadfall generate env .env.production
+deadfall generate mcp .mcp-admin.json
+
+# Watch for access
+deadfall watch
+```
+
+### Key Features
+
+| Feature | Description |
+|:--------|:------------|
+| **Canary Tokens** | Generate fake `.env`, SSH keys, AWS credentials, and more |
+| **MCP Honeypots** | Fake MCP tool configs that attract malicious agents |
+| **File Watching** | Real-time alerts when canaries are accessed |
+| **Webhook Alerts** | Send notifications to Slack, email, or custom endpoints |
+
+---
+
 ## Trust & Security
 
 **Your data never leaves your machine.** All Dotset Labs tools are 100% local — no cloud, no telemetry, no account required.
@@ -143,6 +173,7 @@ tollgate start --server postgres
 - [Hardpoint source code](https://github.com/dotsetlabs/hardpoint)
 - [Countersign source code](https://github.com/dotsetlabs/countersign)
 - [Tollgate source code](https://github.com/dotsetlabs/tollgate)
+- [Deadfall source code](https://github.com/dotsetlabs/deadfall)
 
 ---
 
@@ -153,6 +184,7 @@ tollgate start --server postgres
 - [Hardpoint GitHub](https://github.com/dotsetlabs/hardpoint) — Dev environment scanner
 - [Countersign GitHub](https://github.com/dotsetlabs/countersign) — Package provenance verification
 - [Tollgate GitHub](https://github.com/dotsetlabs/tollgate) — MCP security proxy
+- [Deadfall GitHub](https://github.com/dotsetlabs/deadfall) — Honeypot and canary tokens
 
 <div align="center">
 
