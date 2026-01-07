@@ -20,7 +20,7 @@ AI assistants create new attack surfaces. Our tools provide layered security acr
 |:------|:-----|:--------|
 | **Pre-install** | [Hardpoint](#hardpoint) | Scan your dev environment for hidden threats |
 | **At Runtime** | [Tollgate](#tollgate) | Enforce policies on AI agent actions |
-| **Detection** | [Deadfall](#deadfall) | Trap intruders with honeypots and canary tokens |
+| **Detection** | [Deadfall](#deadfall) | Detect AI compromise with cognitive honeypots |
 
 ---
 
@@ -86,7 +86,7 @@ tollgate start --server postgres
 | **Policy Engine** | Allow, deny, or prompt based on tool, arguments, and risk level |
 | **Risk Analysis** | Smart analyzers for SQL, Filesystem, Shell, and HTTP API calls |
 | **Server Scanner** | Scan any MCP server to discover tools and assess risks before use |
-| **Templates** | 50+ pre-built policy templates for popular MCP servers |
+| **Templates** | Growing collection of policy templates for popular MCP servers |
 | **Audit Logging** | Every tool invocation logged to SQLite with PII redaction |
 | **Compliance** | Export logs in JSON, CSV, SARIF, or CEF formats |
 | **Approval Methods** | Terminal prompts, interactive web UI, or webhook integration |
@@ -102,9 +102,9 @@ tollgate start --server postgres
 
 ## Deadfall
 
-**AI agent honeypot and canary token generator.**
+**Cognitive honeypots for AI agent detection.**
 
-Deadfall generates deceptive artifacts — fake credentials, API keys, and MCP tools — to detect when AI agents or intruders access sensitive-looking resources.
+Deadfall detects AI agent compromise by exploiting their instruction-following behavior. Trapped files instruct agents to call a verification tool — which triggers an alert.
 
 [![GitHub](https://img.shields.io/badge/source-dotsetlabs/deadfall-f59e0b?style=flat-square)](https://github.com/dotsetlabs/deadfall)
 
@@ -115,22 +115,24 @@ go install github.com/dotsetlabs/deadfall/cmd/deadfall@latest
 # Initialize in your project
 deadfall init
 
-# Generate canary files
-deadfall generate env .env.production
-deadfall generate mcp .mcp-admin.json
+# Create trap files
+deadfall trap cursor-rules      # .cursorrules for Cursor
+deadfall trap claude-context    # CLAUDE.md for Claude
+deadfall trap mcp-config        # mcp.json honeypot
 
-# Watch for access
-deadfall watch
+# Start the Honey-MCP server
+deadfall serve
 ```
 
 ### Key Features
 
 | Feature | Description |
 |:--------|:------------|
-| **Canary Tokens** | Generate fake `.env`, SSH keys, AWS credentials, and more |
-| **MCP Honeypots** | Fake MCP tool configs that attract malicious agents |
-| **File Watching** | Real-time alerts when canaries are accessed |
-| **Webhook Alerts** | Send notifications to Slack, email, or custom endpoints |
+| **Cognitive Traps** | Exploit AI instruction-following to detect compromise |
+| **AI-Specific Types** | Traps for Cursor, Claude, Copilot, MCP clients |
+| **Honey-MCP Server** | Honeypot tools that attract malicious agents |
+| **Token Correlation** | Alerts include which file was read |
+| **Multi-Channel Alerts** | Desktop, log file, webhook delivery |
 
 ---
 
@@ -150,7 +152,7 @@ deadfall watch
 - [docs.dotsetlabs.com](https://docs.dotsetlabs.com) — Documentation
 - [Hardpoint GitHub](https://github.com/dotsetlabs/hardpoint) — Dev environment scanner
 - [Tollgate GitHub](https://github.com/dotsetlabs/tollgate) — MCP security proxy
-- [Deadfall GitHub](https://github.com/dotsetlabs/deadfall) — Honeypot and canary tokens
+- [Deadfall GitHub](https://github.com/dotsetlabs/deadfall) — Cognitive honeypots
 
 <div align="center">
 
