@@ -88,7 +88,7 @@ tollgate start --server postgres
 | **Server Scanner** | Scan any MCP server to discover tools and assess risks before use |
 | **Templates** | Growing collection of policy templates for popular MCP servers |
 | **Audit Logging** | Every tool invocation logged to SQLite with PII redaction |
-| **Compliance** | Export logs in JSON, CSV, SARIF, or CEF formats |
+| **Compliance** | Export logs in JSON, JSONL, CSV, or CEF formats |
 | **Approval Methods** | Terminal prompts, interactive web UI, or webhook integration |
 
 ### Works With
@@ -119,6 +119,9 @@ deadfall init
 deadfall trap cursor-rules      # .cursorrules for Cursor
 deadfall trap claude-context    # CLAUDE.md for Claude
 deadfall trap mcp-config        # mcp.json honeypot
+
+# Verify your setup
+deadfall test
 
 # Start the Honey-MCP server
 deadfall serve
