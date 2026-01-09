@@ -21,6 +21,41 @@ AI assistants create new attack surfaces. Our tools provide layered security acr
 | **Pre-install** | [Hardpoint](#hardpoint) | Scan your dev environment for hidden threats |
 | **At Runtime** | [Tollgate](#tollgate) | Enforce policies on AI agent actions |
 | **Detection** | [Deadfall](#deadfall) | Detect AI compromise with cognitive honeypots |
+| **Unified** | [Dotset CLI](#dotset-cli) | All three tools in one command |
+
+---
+
+## Dotset CLI
+
+**One CLI for the complete AI security stack.**
+
+The unified `dotset` command bundles Hardpoint, Tollgate, and Deadfall — install once, protect everywhere.
+
+[![npm](https://img.shields.io/npm/v/@dotsetlabs/dotset?style=flat-square&label=npm)](https://www.npmjs.com/package/@dotsetlabs/dotset)
+
+```bash
+npm install -g @dotsetlabs/dotset
+
+# Run with full protection (scan + proxy + honeypots)
+dotset run -- npx @modelcontextprotocol/server-postgres
+
+# Or use individual commands
+dotset scan                    # Hardpoint security scan
+dotset wrap -- <server>        # Tollgate proxy
+dotset trap cursor-rules       # Deadfall honeypot
+dotset guard init              # Shell guardian
+dotset serve --all             # Multi-server orchestration
+```
+
+### 19 Commands, Full Coverage
+
+| Category | Commands |
+|:---------|:---------|
+| **Core** | `init`, `doctor`, `status`, `run` |
+| **Scanning** | `scan`, `fix`, `baseline`, `integrity` |
+| **MCP Proxy** | `wrap`, `serve`, `validate`, `guard`, `templates` |
+| **Honeypots** | `trap` (with `status`, `metrics`) |
+| **Audit** | `logs`, `stats`, `export` |
 
 ---
 
@@ -153,6 +188,7 @@ deadfall serve
 
 - [dotsetlabs.com](https://dotsetlabs.com) — Website
 - [docs.dotsetlabs.com](https://docs.dotsetlabs.com) — Documentation
+- [Dotset CLI on npm](https://www.npmjs.com/package/@dotsetlabs/dotset) — Unified CLI
 - [Hardpoint GitHub](https://github.com/dotsetlabs/hardpoint) — Dev environment scanner
 - [Tollgate GitHub](https://github.com/dotsetlabs/tollgate) — MCP security proxy
 - [Deadfall GitHub](https://github.com/dotsetlabs/deadfall) — Cognitive honeypots
