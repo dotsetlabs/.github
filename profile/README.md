@@ -2,7 +2,7 @@
 
 # Dotset Labs
 
-**Open-source security tools for the AI era.**
+**Open-source security tools for AI-augmented development.**
 
 [![Website](https://img.shields.io/badge/website-dotsetlabs.com-blue?style=flat-square)](https://dotsetlabs.com)
 [![Documentation](https://img.shields.io/badge/docs-docs.dotsetlabs.com-10b981?style=flat-square)](https://docs.dotsetlabs.com)
@@ -14,56 +14,20 @@
 
 ## Defense in Depth for AI Development
 
-AI assistants create new attack surfaces. Our tools provide layered security across the development lifecycle:
+AI assistants can read secrets, execute commands, and modify your system. We build the security tools that should exist but don't.
 
-| Stage | Tool | Purpose |
+| Layer | Tool | Purpose |
 |:------|:-----|:--------|
-| **Pre-install** | [Hardpoint](#hardpoint) | Scan your dev environment for hidden threats |
-| **At Runtime** | [Tollgate](#tollgate) | Enforce policies on AI agent actions |
-| **Detection** | [Deadfall](#deadfall) | Detect AI compromise with cognitive honeypots |
-| **Unified** | [Dotset CLI](#dotset-cli) | All three tools in one command |
-
----
-
-## Dotset CLI
-
-**One CLI for the complete AI security stack.**
-
-The unified `dotset` command bundles Hardpoint, Tollgate, and Deadfall — install once, protect everywhere.
-
-[![npm](https://img.shields.io/npm/v/@dotsetlabs/dotset?style=flat-square&label=npm)](https://www.npmjs.com/package/@dotsetlabs/dotset)
-
-```bash
-npm install -g @dotsetlabs/dotset
-
-# Run with full protection (scan + proxy + honeypots)
-dotset run -- npx @modelcontextprotocol/server-postgres
-
-# Or use individual commands
-dotset scan                    # Hardpoint security scan
-dotset wrap -- <server>        # Tollgate proxy
-dotset trap cursor-rules       # Deadfall honeypot
-dotset guard init              # Shell guardian
-dotset serve --all             # Multi-server orchestration
-```
-
-### 19 Commands, Full Coverage
-
-| Category | Commands |
-|:---------|:---------|
-| **Core** | `init`, `doctor`, `status`, `run` |
-| **Scanning** | `scan`, `fix`, `baseline`, `integrity` |
-| **MCP Proxy** | `wrap`, `serve`, `validate`, `guard`, `templates` |
-| **Honeypots** | `trap` (with `status`, `metrics`) |
-| **Audit** | `logs`, `stats`, `export` |
+| **SCAN** | [Hardpoint](#hardpoint) | Detect Rules File Backdoor attacks in AI configs |
+| **CONTROL** | [Overwatch](#overwatch) | MCP security proxy with tool shadowing detection |
 
 ---
 
 ## Hardpoint
 
-**Developer environment security scanner for the AI era.**
+**AI Configuration Security Scanner**
 
-Hardpoint scans your development environment for threats that traditional security tools miss — malicious AI config files, prompt injection, hidden Unicode, and more.
+Detects the Rules File Backdoor attack — where AI config files contain hidden malicious instructions invisible to human review.
 
 [![GitHub](https://img.shields.io/badge/source-dotsetlabs/hardpoint-10b981?style=flat-square)](https://github.com/dotsetlabs/hardpoint)
 
@@ -71,116 +35,84 @@ Hardpoint scans your development environment for threats that traditional securi
 # Install
 go install github.com/dotsetlabs/hardpoint/cmd/hardpoint@latest
 
-# Scan your environment
+# Scan AI config files
 hardpoint scan
 
-# Auto-fix certain issues
-hardpoint fix AI-003 CLAUDE.md
-
-# Manage suppression baselines
-hardpoint baseline list
-hardpoint baseline add AI-001 --reason "Known safe"
+# Trust verified configs
+hardpoint trust CLAUDE.md
 ```
 
-### Key Features
+### Detection Rules
 
-| Feature | Description |
-|:--------|:------------|
-| **AI Config Scanner** | Detects threats in `.cursorrules`, `CLAUDE.md`, `mcp.json` |
-| **Hidden Unicode** | Finds invisible characters that can hide malicious instructions |
-| **Prompt Injection** | Identifies attempts to override AI assistant behavior |
-| **Shell Backdoors** | Scans `.bashrc`, `.zshrc` for suspicious commands |
-| **Git Hook Analysis** | Checks for malicious git hooks |
-| **SARIF Output** | GitHub Code Scanning integration |
+| Rule | Category | Description |
+|:-----|:---------|:------------|
+| **AI-008** | Semantic Hijacking | Hidden instructions in comments/structure (80+ patterns) |
+| **AI-005** | MCP Injection | Command injection in MCP configurations |
+| **AI-004** | Encoded Content | Malicious patterns in Base64/encoded content |
+| **GIT-001** | Git Hooks | Malicious commands in git hooks |
+| **GIT-002** | Git Hooks | Credential exfiltration attempts |
+| **GIT-003** | Git Hooks | Unexpected network access |
+| **GIT-004** | Git Hooks | Obfuscated hook content |
+| **GIT-005** | Git Config | Suspicious remote URLs |
+| **GIT-006** | Git Config | Malicious credential helpers |
+
+### AI Config Files Scanned
+
+`.cursorrules` • `CLAUDE.md` • `AGENTS.md` • `mcp.json` • `.github/copilot-instructions.md` • `.windsurfrules`
+
+### CLI Commands
+
+`scan` • `fix` • `ignore` • `trust` • `verify` • `rules` • `init` • `hook` • `doctor`
 
 ---
 
-## Tollgate
+## Overwatch
 
-**Policy-based security proxy for MCP (Model Context Protocol) servers.**
+**MCP Security Proxy with Tool Shadowing Detection**
 
-Tollgate sits between AI agents and MCP servers, enforcing security policies before any tool is executed.
+Intercept and control AI tool operations through the Model Context Protocol. Detect when malicious servers impersonate trusted tools.
 
-[![npm](https://img.shields.io/npm/v/@dotsetlabs/tollgate?style=flat-square&label=npm)](https://www.npmjs.com/package/@dotsetlabs/tollgate)
-[![GitHub](https://img.shields.io/badge/source-dotsetlabs/tollgate-8b5cf6?style=flat-square)](https://github.com/dotsetlabs/tollgate)
+[![npm](https://img.shields.io/npm/v/@dotsetlabs/overwatch?style=flat-square&label=npm)](https://www.npmjs.com/package/@dotsetlabs/overwatch)
+[![GitHub](https://img.shields.io/badge/source-dotsetlabs/overwatch-06b6d4?style=flat-square)](https://github.com/dotsetlabs/overwatch)
 
 ```bash
-npm install -g @dotsetlabs/tollgate
+npm install -g @dotsetlabs/overwatch
 
-# Wrap any MCP server with protection
-tollgate wrap npx @anthropic/mcp-server-fs ./
+# Wrap any MCP server with policy enforcement
+overwatch wrap npx @modelcontextprotocol/server-postgres
 
-# Or use a config file for custom policies
-tollgate start --server postgres
+# Initialize configuration
+overwatch init
 ```
 
-### Key Features
+### Core Features
 
 | Feature | Description |
 |:--------|:------------|
-| **Policy Engine** | Allow, deny, or prompt based on tool, arguments, and risk level |
-| **Risk Analysis** | Smart analyzers for SQL, Filesystem, Shell, and HTTP API calls |
-| **Server Scanner** | Scan any MCP server to discover tools and assess risks before use |
-| **Templates** | Growing collection of policy templates for popular MCP servers |
-| **Audit Logging** | Every tool invocation logged to SQLite with PII redaction |
-| **Compliance** | Export logs in JSON, JSONL, CSV, or CEF formats |
-| **Approval Methods** | Terminal prompts, interactive web UI, or webhook integration |
+| **Policy Engine** | Declarative YAML policies with allow/deny/prompt actions |
+| **Tool Shadowing Detection** | Schema hashing, collision detection, mutation monitoring (CVE-2025-6514) |
+| **Session Approvals** | Time-limited grants with SQLite persistence |
+| **Path-Based Rules** | Restrict filesystem access by glob patterns |
+| **Audit Logging** | Complete trail with JSON, CSV, CEF export |
+
+### CLI Commands
+
+`wrap` • `start` • `sessions` • `logs` • `stats` • `init` • `policies` • `doctor`
 
 ### Works With
 
-- Claude Desktop
-- Cursor
-- Claude Code
-- Any MCP-compatible AI agent
-
----
-
-## Deadfall
-
-**Cognitive honeypots for AI agent detection.**
-
-Deadfall detects AI agent compromise by exploiting their instruction-following behavior. Trapped files instruct agents to call a verification tool — which triggers an alert.
-
-[![GitHub](https://img.shields.io/badge/source-dotsetlabs/deadfall-f59e0b?style=flat-square)](https://github.com/dotsetlabs/deadfall)
-
-```bash
-# Install
-go install github.com/dotsetlabs/deadfall/cmd/deadfall@latest
-
-# Initialize in your project
-deadfall init
-
-# Create trap files
-deadfall trap cursor-rules      # .cursorrules for Cursor
-deadfall trap claude-context    # CLAUDE.md for Claude
-deadfall trap mcp-config        # mcp.json honeypot
-
-# Verify your setup
-deadfall test
-
-# Start the Honey-MCP server
-deadfall serve
-```
-
-### Key Features
-
-| Feature | Description |
-|:--------|:------------|
-| **Cognitive Traps** | Exploit AI instruction-following to detect compromise |
-| **AI-Specific Types** | Traps for Cursor, Claude, Copilot, MCP clients |
-| **Honey-MCP Server** | Honeypot tools that attract malicious agents |
-| **Token Correlation** | Alerts include which file was read |
-| **Multi-Channel Alerts** | Desktop, log file, webhook delivery |
+Claude Desktop • Cursor • Any MCP-compatible AI agent
 
 ---
 
 ## Trust & Security
 
-**Your data never leaves your machine.** All Dotset Labs tools are 100% local — no cloud, no telemetry, no account required.
+**Your data never leaves your machine.** All tools are 100% local — no cloud, no telemetry, no account required.
 
-- [Hardpoint source code](https://github.com/dotsetlabs/hardpoint)
-- [Tollgate source code](https://github.com/dotsetlabs/tollgate)
-- [Deadfall source code](https://github.com/dotsetlabs/deadfall)
+| Tool | Language | Source | License |
+|:-----|:---------|:-------|:--------|
+| Hardpoint | Go | [github.com/dotsetlabs/hardpoint](https://github.com/dotsetlabs/hardpoint) | MIT |
+| Overwatch | TypeScript | [github.com/dotsetlabs/overwatch](https://github.com/dotsetlabs/overwatch) | MIT |
 
 ---
 
@@ -188,10 +120,8 @@ deadfall serve
 
 - [dotsetlabs.com](https://dotsetlabs.com) — Website
 - [docs.dotsetlabs.com](https://docs.dotsetlabs.com) — Documentation
-- [Dotset CLI on npm](https://www.npmjs.com/package/@dotsetlabs/dotset) — Unified CLI
-- [Hardpoint GitHub](https://github.com/dotsetlabs/hardpoint) — Dev environment scanner
-- [Tollgate GitHub](https://github.com/dotsetlabs/tollgate) — MCP security proxy
-- [Deadfall GitHub](https://github.com/dotsetlabs/deadfall) — Cognitive honeypots
+- [Hardpoint](https://github.com/dotsetlabs/hardpoint) — AI Configuration Security Scanner
+- [Overwatch](https://github.com/dotsetlabs/overwatch) — MCP Security Proxy
 
 <div align="center">
 
