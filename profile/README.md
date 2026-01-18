@@ -2,7 +2,7 @@
 
 # Dotset Labs
 
-**Developer tools for AI-assisted development.**
+**Security tools for AI-assisted development.**
 
 [![Website](https://img.shields.io/badge/website-dotsetlabs.com-0f172a?style=flat-square)](https://dotsetlabs.com)
 [![Documentation](https://img.shields.io/badge/docs-docs.bellwether.sh-0f5132?style=flat-square)](https://docs.bellwether.sh)
@@ -14,31 +14,32 @@
 
 ## Our Products
 
-We build tools that help developers work safely and confidently with AI assistants. From behavioral documentation to security scanning, our products provide visibility and control over AI-powered workflows.
+We build security tools that help developers work safely with AI assistants. From drift detection to config scanning to runtime firewalling, our products provide visibility and control over MCP-powered workflows.
 
 | Layer | Tool | Purpose |
 |:------|:-----|:--------|
-| **DOCUMENT** | [Bellwether](#bellwether) | Behavioral documentation and drift detection for MCP servers |
-| **SCAN** | [Hardpoint](#hardpoint) | Detect Rules File Backdoor attacks in AI configs |
-| **CONTROL** | [Overwatch](#overwatch) | MCP security proxy with tool shadowing detection |
+| **DETECT** | [Bellwether](#bellwether) | Structural drift detection for MCP servers |
+| **SCAN** | [Hardpoint](#hardpoint) | Rules File Backdoor detection in AI configs |
+| **CONTROL** | [Overwatch](#overwatch) | AI Agent Firewall with tool shadowing detection |
 
 ---
 
 ## Bellwether
 
-**The Missing Docs for Every MCP Server**
+**Structural Drift Detection for MCP Servers**
 
-Interview your MCP servers with AI to generate behavioral documentation. Know what tools actually do before you trust them with your workflows.
+Detect when your MCP server's tools, schemas, or descriptions change. Zero-LLM structural mode by default catches breaking changes before they reach production. Optional LLM-powered mode adds multi-persona testing and AGENTS.md documentation.
 
 [![Website](https://img.shields.io/badge/bellwether.sh-0f5132?style=flat-square)](https://bellwether.sh)
 [![npm](https://img.shields.io/npm/v/@dotsetlabs/bellwether?style=flat-square&label=npm)](https://www.npmjs.com/package/@dotsetlabs/bellwether)
 [![GitHub](https://img.shields.io/badge/source-dotsetlabs/bellwether-0f5132?style=flat-square)](https://github.com/dotsetlabs/bellwether)
 
 ```bash
-# Interview any MCP server
-npx @dotsetlabs/bellwether interview
+# Initialize config and run structural drift detection
+npx @dotsetlabs/bellwether init
+bellwether test
 
-# Upload baselines to track drift
+# Upload baselines to cloud for team collaboration
 bellwether upload
 ```
 
@@ -46,11 +47,19 @@ bellwether upload
 
 | Feature | Description |
 |:--------|:------------|
-| **AGENTS.md Generation** | Comprehensive behavioral docs from AI-powered interviews |
-| **Multi-Persona Testing** | Test from 4 perspectives: Technical Writer, Security Tester, QA Engineer, Novice User |
-| **Drift Detection** | Track changes over time with baseline comparisons and alerts |
-| **Security Analysis** | Identify potential vulnerabilities and data access patterns |
-| **CI/CD Integration** | Block deployments when behavioral drift is detected |
+| **Structural Drift Detection** | Zero-LLM comparison of tool presence, schema hashes, and descriptions |
+| **AGENTS.md Generation** | Optional LLM-powered behavioral documentation |
+| **Multi-Persona Testing** | Optional testing from 4 perspectives: Technical Writer, Security Tester, QA Engineer, Novice User |
+| **CI/CD Integration** | Block deployments when drift is detected with `--failOnDrift` |
+| **MCP Registry Search** | Discover and test servers from the MCP Registry |
+
+### Commands
+
+**Core:** `init` • `test` • `discover` • `watch` • `verify` • `registry`
+
+**Baseline:** `baseline save` • `baseline compare` • `baseline show` • `baseline diff`
+
+**Cloud:** `login` • `link` • `upload` • `history` • `diff` • `badge`
 
 ### Cloud Platform
 
@@ -64,9 +73,9 @@ The open-source CLI works standalone. The optional [cloud platform](https://dash
 
 ## Hardpoint
 
-**AI Configuration Security Scanner**
+**The Rules File Backdoor Detector**
 
-Detects the Rules File Backdoor attack — where AI config files contain hidden malicious instructions invisible to human review.
+Static security scanner for AI configuration files. Detects the Rules File Backdoor attack (24 CVEs in 2025) — where hidden malicious instructions lurk in `.cursorrules`, `CLAUDE.md`, and other AI config files.
 
 [![GitHub](https://img.shields.io/badge/source-dotsetlabs/hardpoint-0f5132?style=flat-square)](https://github.com/dotsetlabs/hardpoint)
 
@@ -77,18 +86,18 @@ go install github.com/dotsetlabs/hardpoint/cmd/hardpoint@latest
 # Scan AI config files
 hardpoint scan
 
-# Trust verified configs with HMAC-SHA256
+# Trust verified configs with hash verification
 hardpoint trust CLAUDE.md
 ```
 
 ### Detection Rules
 
-| Rule | Category | Description |
+| Rule | Severity | Description |
 |:-----|:---------|:------------|
-| **AI-008** | Semantic Hijacking | Hidden instructions in comments/structure (80+ patterns) |
-| **AI-005** | MCP Injection | Command injection in MCP configurations |
-| **AI-004** | Encoded Content | Malicious patterns in Base64/encoded content |
-| **GIT-001–006** | Git Security | Malicious hooks, credential exfiltration, suspicious remotes |
+| **AI-008** | Critical | Semantic hijacking — hidden instructions in comments/structure |
+| **AI-005** | Critical | MCP command injection in server configurations |
+| **AI-004** | Medium | Base64 or otherwise encoded instructions |
+| **GIT-001–006** | Critical–Medium | Malicious hooks, credential exfiltration, suspicious remotes |
 
 ### AI Config Files Scanned
 
@@ -96,15 +105,15 @@ hardpoint trust CLAUDE.md
 
 ### Commands
 
-`scan` • `fix` • `ignore` • `trust` • `verify` • `rules` • `init` • `hook` • `doctor`
+`scan` • `trust` • `verify` • `hook`
 
 ---
 
 ## Overwatch
 
-**MCP Security Proxy with Tool Shadowing Detection**
+**The AI Agent Firewall**
 
-Intercept and control AI tool operations through the Model Context Protocol. Detect when malicious servers impersonate trusted tools.
+Runtime security proxy for MCP. Protects AI development environments by detecting tool impersonation attacks (CVE-2025-6514) and enforcing policy-based access control.
 
 [![npm](https://img.shields.io/npm/v/@dotsetlabs/overwatch?style=flat-square&label=npm)](https://www.npmjs.com/package/@dotsetlabs/overwatch)
 [![GitHub](https://img.shields.io/badge/source-dotsetlabs/overwatch-0f5132?style=flat-square)](https://github.com/dotsetlabs/overwatch)
@@ -113,7 +122,7 @@ Intercept and control AI tool operations through the Model Context Protocol. Det
 # Install
 npm install -g @dotsetlabs/overwatch
 
-# Wrap any MCP server with policy enforcement
+# Wrap any MCP server with security proxy
 overwatch wrap npx @modelcontextprotocol/server-postgres
 
 # Initialize configuration
@@ -124,15 +133,15 @@ overwatch init
 
 | Feature | Description |
 |:--------|:------------|
-| **Tool Shadowing Detection** | Schema hashing, collision detection, mutation monitoring (CVE-2025-6514) |
+| **Tool Shadowing Detection** | Cryptographic verification — schema hashing, collision detection, mutation monitoring |
 | **Policy Engine** | Declarative YAML policies with allow/deny/prompt actions |
 | **Session Approvals** | Time-limited grants: once, 5 minutes, or session-based |
 | **Path-Based Rules** | Restrict filesystem access by glob patterns |
-| **Audit Logging** | Complete trail with JSON, CSV, CEF export for SIEM |
+| **Audit Logging** | Complete trail with JSON, CEF export for SIEM integration |
 
 ### Commands
 
-`wrap` • `start` • `sessions` • `logs` • `stats` • `init` • `policies` • `doctor`
+`wrap` • `start` • `init` • `doctor` • `logs` • `stats` • `sessions` • `policies`
 
 ### Works With
 
