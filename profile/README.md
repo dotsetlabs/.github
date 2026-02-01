@@ -2,7 +2,7 @@
 
 # Dotset Labs
 
-**Security tools for AI-assisted development.**
+**Open-source tools for AI-assisted development.**
 
 [![Website](https://img.shields.io/badge/website-dotsetlabs.com-0f172a?style=flat-square)](https://dotsetlabs.com)
 [![Documentation](https://img.shields.io/badge/docs-docs.bellwether.sh-0f5132?style=flat-square)](https://docs.bellwether.sh)
@@ -14,23 +14,22 @@
 
 ## Our Products
 
-We build security tools that help developers work safely with AI assistants. From drift detection to config scanning to runtime firewalling, our products provide visibility and control over MCP-powered workflows.
+We build tools that help developers test MCP servers and track AI-generated code. Everything is MIT licensed and free to use.
 
-| Layer | Tool | Purpose |
-|:------|:-----|:--------|
-| **DETECT** | [Bellwether](#bellwether) | Structural drift detection for MCP servers |
-| **SCAN** | [Hardpoint](#hardpoint) | Rules File Backdoor detection in AI configs |
-| **CONTROL** | [Overwatch](#overwatch) | AI Agent Firewall with tool shadowing detection |
+| Tool | Purpose |
+|:-----|:--------|
+| [Bellwether](#bellwether) | MCP server testing and drift detection |
+| [whogitit](#whogitit) | AI code attribution at line-level granularity |
 
 ---
 
 ## Bellwether
 
-**Structural Drift Detection for MCP Servers**
+**MCP Server Testing**
 
 Detect when your MCP server's tools, schemas, or descriptions change. The `check` command provides zero-LLM structural validation that catches breaking changes before they reach production. The optional `explore` command adds LLM-powered multi-persona behavioral testing and AGENTS.md documentation.
 
-[![Website](https://img.shields.io/badge/bellwether.sh-0f5132?style=flat-square)](https://bellwether.sh)
+[![Website](https://img.shields.io/badge/docs.bellwether.sh-0f5132?style=flat-square)](https://docs.bellwether.sh)
 [![npm](https://img.shields.io/npm/v/@dotsetlabs/bellwether?style=flat-square&label=npm)](https://www.npmjs.com/package/@dotsetlabs/bellwether)
 [![GitHub](https://img.shields.io/badge/source-dotsetlabs/bellwether-0f5132?style=flat-square)](https://github.com/dotsetlabs/bellwether)
 
@@ -87,101 +86,78 @@ The open-source CLI works standalone. The optional [cloud platform](https://dash
 
 ---
 
-## Hardpoint
+## whogitit
 
-**The Rules File Backdoor Detector**
+**AI Code Attribution**
 
-Static security scanner for AI configuration files. Detects the Rules File Backdoor attack (24 CVEs in 2025) — where hidden malicious instructions lurk in `.cursorrules`, `CLAUDE.md`, and other AI config files.
+Track AI-generated code at line-level granularity. Know exactly which lines were written by AI, which were modified by humans, and what prompts generated them.
 
-[![GitHub](https://img.shields.io/badge/source-dotsetlabs/hardpoint-0f5132?style=flat-square)](https://github.com/dotsetlabs/hardpoint)
-
-```bash
-# Install
-go install github.com/dotsetlabs/hardpoint/cmd/hardpoint@latest
-
-# Scan AI config files
-hardpoint scan
-
-# Trust verified configs with hash verification
-hardpoint trust CLAUDE.md
-```
-
-### Detection Rules
-
-| Rule | Severity | Description |
-|:-----|:---------|:------------|
-| **AI-008** | Critical | Semantic hijacking — hidden instructions in comments/structure |
-| **AI-005** | Critical | MCP command injection in server configurations |
-| **AI-004** | Medium | Base64 or otherwise encoded instructions |
-| **GIT-001–006** | Critical–Medium | Malicious hooks, credential exfiltration, suspicious remotes |
-
-### AI Config Files Scanned
-
-`.cursorrules` • `CLAUDE.md` • `AGENTS.md` • `mcp.json` • `.github/copilot-instructions.md` • `.windsurfrules` • `.aider*`
-
-### Commands
-
-`scan` • `trust` • `verify` • `hook`
-
----
-
-## Overwatch
-
-**The AI Agent Firewall**
-
-Runtime security proxy for MCP. Protects AI development environments by detecting tool impersonation attacks (CVE-2025-6514) and enforcing policy-based access control.
-
-[![npm](https://img.shields.io/npm/v/@dotsetlabs/overwatch?style=flat-square&label=npm)](https://www.npmjs.com/package/@dotsetlabs/overwatch)
-[![GitHub](https://img.shields.io/badge/source-dotsetlabs/overwatch-0f5132?style=flat-square)](https://github.com/dotsetlabs/overwatch)
+[![GitHub](https://img.shields.io/badge/source-dotsetlabs/whogitit-0f5132?style=flat-square)](https://github.com/dotsetlabs/whogitit)
 
 ```bash
-# Install
-npm install -g @dotsetlabs/overwatch
+# Install from source
+git clone https://github.com/dotsetlabs/whogitit
+cd whogitit
+cargo install --path .
 
-# Wrap any MCP server with security proxy
-overwatch wrap npx @modelcontextprotocol/server-postgres
+# One-time setup (installs Claude Code hooks)
+whogitit setup
 
-# Initialize configuration
-overwatch init
+# Initialize repository
+whogitit init
+
+# View AI attribution for a file
+whogitit blame src/main.rs
 ```
 
-### Core Features
+### Features
 
 | Feature | Description |
 |:--------|:------------|
-| **Tool Shadowing Detection** | Cryptographic verification — schema hashing, collision detection, mutation monitoring |
-| **Policy Engine** | Declarative YAML policies with allow/deny/prompt actions |
-| **Session Approvals** | Time-limited grants: once, 5 minutes, or session-based |
-| **Path-Based Rules** | Restrict filesystem access by glob patterns |
-| **Audit Logging** | Complete trail with JSON, CEF export for SIEM integration |
+| **Line-Level Attribution** | Track whether each line is AI-generated, human-modified, or original |
+| **Prompt Preservation** | Store the prompts that generated code alongside commits |
+| **Three-Way Diff Analysis** | Accurate attribution even when you edit AI code before committing |
+| **Git-Native Storage** | Uses git notes that travel with your repository |
+| **Claude Code Integration** | Automatic capture via hooks |
+| **GitHub Action** | PR comments showing AI attribution summaries with prompts |
+| **Privacy Protection** | Automatic redaction of API keys, passwords, and sensitive data |
 
 ### Commands
 
-`wrap` • `start` • `init` • `doctor` • `logs` • `stats` • `sessions` • `policies`
+**Core:** `blame` • `show` • `prompt` • `summary` • `status` • `clear`
 
-### Works With
+**Setup:** `setup` • `init` • `doctor`
 
-Claude Desktop • Cursor • Any MCP-compatible AI agent
+**Data:** `export` • `retention` • `audit` • `redact-test`
+
+**CI/CD:** `annotations` • `pager`
+
+### Line Attribution Types
+
+| Source | Symbol | Description |
+|:-------|:-------|:------------|
+| AI | `●` | Generated by AI, unchanged |
+| AIModified | `◐` | Generated by AI, then edited by human |
+| Human | `+` | Added by human after AI edits |
+| Original | `─` | Existed before AI session |
 
 ---
 
 ## Trust & Security
 
-**Your data stays on your machine.** Hardpoint and Overwatch are 100% local — no cloud, no telemetry, no account required. Bellwether's CLI works offline; the cloud platform is optional.
+**Your data stays on your machine.** Both tools work entirely offline with no telemetry and no account required. Bellwether's cloud platform is optional.
 
 | Tool | Language | License | Cloud Required |
 |:-----|:---------|:--------|:---------------|
 | Bellwether | TypeScript | MIT | Optional |
-| Hardpoint | Go | MIT | No |
-| Overwatch | TypeScript | MIT | No |
+| whogitit | Rust | MIT | No |
 
 ---
 
 ## Links
 
 - [dotsetlabs.com](https://dotsetlabs.com) — Company Website
-- [bellwether.sh](https://bellwether.sh) — Bellwether Product Site
-- [docs.bellwether.sh](https://docs.bellwether.sh) — Documentation
+- [docs.bellwether.sh](https://docs.bellwether.sh) — Bellwether Documentation
 
 <div align="center">
 
